@@ -1,773 +1,474 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BISE Comilla - SSC Exam & Certificate System</title>
-    <style>
-        :root {
-            --primary-color: #0b2b5c;
-            --secondary-color: #0d6e38;
-            --accent-color: #d4af37;
-            --light-bg: #f4f7f6;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shahjalal High Government College University - Exam System</title>
+  <style>
+    :root {
+      --primary-color: #0b2b5c;
+      --secondary-color: #cd6e38;
+      --accent-color: #d4af37;
+      --light-bg: #f4f7f6;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--light-bg);
-            color: #333;
-        }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--light-bg);
+      color: #333;
+    }
 
-        header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
+    header {
+      background: linear-gradient(135deg, var(--primary-color), #1a4a8d);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
 
-        header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
+    header h1 {
+      margin: 0;
+      font-size: 26px;
+    }
 
-        header p {
-            margin: 5px 0 0;
-            color: var(--accent-color);
-            font-weight: bold;
-        }
+    header p {
+      margin: 5px 0 0 0;
+      color: var(--accent-color);
+      font-weight: bold;
+    }
 
-        .container {
-            max-width: 1000px;
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
 
-        .nav-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
+    .nav-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
 
-        .btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-        }
+    .btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
 
-        .btn:hover {
-            background-color: var(--secondary-color);
-        }
+    .btn:hover {
+      background-color: var(--secondary-color);
+    }
 
-        .btn-danger {
-            background-color: #dc3545;
-        }
+    .btn-danger {
+      background-color: #dc3545;
+    }
 
-        .btn-success {
-            background-color: #28a745;
-        }
+    .btn-success {
+      background-color: #28a745;
+    }
 
-        .section {
-            display: none;
-        }
+    .section {
+      display: none;
+    }
 
-        .active-section {
-            display: block;
-        }
+    .active {
+      display: block;
+    }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
+    .form-group {
+      margin-bottom: 15px;
+    }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
 
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
+    input[type="text"], input[type="number"], select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
 
-        /* Certificate Styling */
-        .certificate-container {
-            position: relative;
-            width: 800px;
-            height: 580px;
-            margin: 20px auto;
-            padding: 30px;
-            border: 10px solid var(--accent-color);
-            background: #fff;
-            text-align: center;
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            overflow: hidden;
-            box-sizing: border-box;
-        }
+    .question-card {
+      border: 1px solid #e0e0e0;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      background: #fafafa;
+    }
 
-        .certificate-bg-logo {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0.12;
-            width: 380px;
-            z-index: 1;
-            pointer-events: none;
-        }
+    .question-card h4 {
+      margin-top: 0;
+    }
 
-        .certificate-content {
-            position: relative;
-            z-index: 2;
-        }
+    #certificate {
+      border: 10px solid var(--primary-color);
+      padding: 40px;
+      text-align: center;
+      background: #fff;
+      position: relative;
+      margin-top: 20px;
+    }
 
-        .certificate-title {
-            font-size: 24px;
-            color: var(--primary-color);
-            font-weight: bold;
-            margin-top: 15px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            border-bottom: 2px solid var(--accent-color);
-            display: inline-block;
-            padding-bottom: 5px;
-        }
+    #certificate h2 {
+      color: var(--primary-color);
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
 
-        .certificate-body {
-            font-size: 16px;
-            line-height: 1.8;
-            margin: 20px 0;
-            text-align: justify;
-            padding: 0 20px;
-        }
+    #certificate .student-name {
+      font-size: 28px;
+      color: var(--secondary-color);
+      border-bottom: 2px solid var(--secondary-color);
+      display: inline-block;
+      padding: 0 20px;
+      margin: 20px 0;
+    }
 
-        .certificate-footer {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 50px;
-            padding: 0 40px;
-        }
+    .user-info {
+      background: #e9ecef;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
 
-        .signature-line {
-            border-top: 2px solid #333;
-            width: 200px;
-            text-align: center;
-            padding-top: 5px;
-            font-weight: bold;
-        }
-
-        .question-card {
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            background-color: #fafafa;
-        }
-
-        .timer {
-            font-size: 18px;
-            font-weight: bold;
-            color: red;
-            text-align: right;
-            margin-bottom: 15px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        table, th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            #certificate-print-area, #certificate-print-area * {
-                visibility: visible;
-            }
-            #certificate-print-area {
-                position: absolute;
-                left: 0;
-                top: 0;
-            }
-        }
-    </style>
+  <!-- Firebase App & Auth SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 </head>
 <body>
 
-    <header>
-        <h1>Shahjalal High Government College University</h1>
-        <p>Hazir Hat Kamal-Nagar, Lakshmipur | Estd. 2025</p>
-    </header>
+  <header>
+    <h1>Shahjalal High Government College University</h1>
+    <p>Online MCQ Examination & Certification System</p>
+  </header>
 
-    <div class="container">
-        <!-- Navigation -->
-        <div class="nav-buttons">
-            <button class="btn" onclick="showSection('teacher-login')">Teacher Admin Portal</button>
-            <button class="btn" onclick="showSection('student-login')">Student Exam Portal</button>
-        </div>
-
-        <!-- Teacher Login Section -->
-        <div id="teacher-login" class="section active-section" style="text-align: center; padding: 30px 10px;">
-            <h2>Teacher / Admin Authentication</h2>
-            <p style="color: #666;">অ্যাডমিন প্যানেলে প্রবেশ করতে আপনার অনুমোদিত অরিজিনাল জিমেইল দিয়ে সাইন ইন করুন:</p>
-            
-            <button class="btn btn-success" onclick="handleGoogleLogin()" style="padding: 12px 24px; font-size: 16px; margin-top: 15px;">
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" style="vertical-align: middle; margin-right: 8px; background: white; border-radius: 50%; padding: 2px;">
-                Sign in with Google (Admin)
-            </button>
-        </div>
-
-        <!-- Teacher Dashboard -->
-        <div id="teacher-dashboard" class="section">
-            <h2>Teacher Dashboard</h2>
-            <p>Welcome Admin: <strong id="admin-email-display">mshahjalal8586@gmail.com</strong></p>
-            <hr>
-
-            <h3>Saved Student Answer Scripts (লিপিবদ্ধ উত্তরপত্রসমূহ)</h3>
-            <p>শিক্ষার্থীদের উত্তর পরীক্ষা করে অনুমোদন ও সার্টিফিকেট প্রদান করুন:</p>
-            
-            <button class="btn btn-danger" onclick="clearAllSubmissions()" style="float: right; margin-bottom: 10px;">Clear All Data</button>
-            <div id="submissions-table-container">
-                <table id="submissions-table">
-                    <thead>
-                        <tr>
-                            <th>Student Roll/ID</th>
-                            <th>Email</th>
-                            <th>Status</th>
-                            <th>Calculated Score</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="submissions-list">
-                        <!-- Student submissions dynamically loaded from localStorage -->
-                    </tbody>
-                </table>
-            </div>
-
-            <hr style="margin: 30px 0;">
-
-            <!-- Certificate Generator Form -->
-            <h3>Manual Issue Certificate</h3>
-            <form onsubmit="generateCertificate(event)">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                    <div class="form-group"><label>Student Roll/ID</label><input type="text" id="cert-id" required></div>
-                    <div class="form-group"><label>Student Name</label><input type="text" id="cert-name" required></div>
-                    <div class="form-group"><label>School Name</label><input type="text" id="cert-school" value="Shahjalal High Government College University" required></div>
-                    <div class="form-group"><label>Father's Name</label><input type="text" id="cert-father" required></div>
-                    <div class="form-group"><label>Mother's Name</label><input type="text" id="cert-mother" required></div>
-                    <div class="form-group"><label>Grade / GPA</label><input type="text" id="cert-grade" placeholder="e.g. GPA 5.00 (A+)" required></div>
-                    <div class="form-group"><label>Village / District</label><input type="text" id="cert-village" value="Kamal-Nagar, Lakshmipur" required></div>
-                    <div class="form-group"><label>Passing Year</label><input type="text" id="cert-session" value="2025" required></div>
-                    <div class="form-group"><label>Controller of Examinations</label><input type="text" id="cert-principal" value="Mohammad Shahjalal" required></div>
-                </div>
-                <button type="submit" class="btn btn-primary">Generate Certificate Preview</button>
-            </form>
-        </div>
-
-        <!-- Teacher Script Review Page -->
-        <div id="script-review" class="section">
-            <button class="btn btn-danger" onclick="showSection('teacher-dashboard')">Back to Dashboard</button>
-            <h2 style="margin-top: 15px;">Review Student Answer Script</h2>
-            <div id="review-student-info" style="background: #eef2f7; padding: 15px; border-radius: 5px; margin-bottom: 20px;"></div>
-            
-            <h3>Answers Review:</h3>
-            <div id="review-answers-container"></div>
-
-            <hr>
-            <h3>Issue Certificate for this Student:</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <div class="form-group"><label>Student Name</label><input type="text" id="rev-name" placeholder="Enter Full Name" required></div>
-                <div class="form-group"><label>Father's Name</label><input type="text" id="rev-father" placeholder="Father's Name" required></div>
-                <div class="form-group"><label>Mother's Name</label><input type="text" id="rev-mother" placeholder="Mother's Name" required></div>
-                <div class="form-group"><label>Calculated GPA / Grade</label><input type="text" id="rev-grade" readonly></div>
-            </div>
-            <button class="btn btn-success" onclick="approveAndGenerateCert()">Approve & Save Certificate</button>
-        </div>
-
-        <!-- Student Login Section -->
-        <div id="student-login" class="section">
-            <h2>Student Portal (Class 10 Bangla)</h2>
-            <form onsubmit="handleStudentLogin(event)">
-                <div class="form-group">
-                    <label>Student Email</label>
-                    <input type="email" id="student-email-input" placeholder="student@gmail.com" required>
-                </div>
-                <div class="form-group">
-                    <label>Student Roll / ID (1 to 50)</label>
-                    <input type="number" id="student-id-input" min="1" max="50" placeholder="Enter ID (1-50)" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Start Exam / Check Result</button>
-            </form>
-        </div>
-
-        <!-- Student Exam Screen -->
-        <div id="exam-screen" class="section">
-            <div class="timer">Time Remaining: <span id="timer-display">50:00</span></div>
-            <h2>Class 10 Bangla MCQ Examination</h2>
-            <p>Total Questions: 50 | Total Marks: 100 (2 Marks each)</p>
-            <form id="exam-form" onsubmit="submitExam(event)">
-                <div id="exam-questions-container"></div>
-                <button type="submit" class="btn btn-success" style="width: 100%; margin-top: 20px;">Submit Answer Script to Teacher</button>
-            </form>
-        </div>
-
-        <!-- Student Status Screen -->
-        <div id="student-status-view" class="section">
-            <div style="text-align: center; padding: 20px;">
-                <h2>Examination Submitted!</h2>
-                <p>Status: <strong id="status-text" style="color: orange; font-size: 20px;">Pending Review</strong></p>
-                <p>Your answer script is saved. Teacher will review your exam and issue the certificate.</p>
-                <div id="cert-download-btn-area" style="margin-top: 20px;"></div>
-                <button class="btn btn-danger" onclick="showSection('student-login')" style="margin-top: 15px;">Logout</button>
-            </div>
-        </div>
-
-        <!-- Certificate Display Area -->
-        <div id="certificate-view" class="section">
-            <button class="btn btn-primary" onclick="window.print()">Print / Save PDF</button>
-            <button class="btn btn-danger" onclick="showSection('teacher-dashboard')">Back to Dashboard</button>
-            
-            <div id="certificate-print-area" class="certificate-container">
-                <svg class="certificate-bg-logo" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="250" cy="250" r="240" fill="#0b2b5c" stroke="#d4af37" stroke-width="12"/>
-                    <circle cx="250" cy="250" r="215" fill="#ffffff"/>
-                    <circle cx="250" cy="250" r="200" fill="none" stroke="#0b2b5c" stroke-width="4"/>
-                    
-                    <path id="textPath" d="M 65 250 A 185 185 0 1 1 435 250" fill="none"/>
-                    <text font-family="Segoe UI, Arial" font-size="20" font-weight="bold" fill="#0b2b5c">
-                        <textPath href="#textPath" startOffset="50%" text-anchor="middle">
-                            BOARD OF INTERMEDIATE AND SECONDARY EDUCATION
-                        </textPath>
-                    </text>
-
-                    <path id="bottomTextPath" d="M 435 250 A 185 185 0 0 1 65 250" fill="none"/>
-                    <text font-family="Segoe UI, Arial" font-size="20" font-weight="bold" fill="#0b2b5c">
-                        <textPath href="#bottomTextPath" startOffset="50%" text-anchor="middle">
-                            COMILLA, BANGLADESH
-                        </textPath>
-                    </text>
-
-                    <g transform="translate(150, 150)">
-                        <path d="M 100 20 L 190 60 L 100 100 L 10 60 Z" fill="#0b2b5c"/>
-                        <path d="M 40 75 V 110 C 40 130 160 130 160 110 V 75" fill="#0b2b5c"/>
-                        <path d="M 175 68 V 120" stroke="#d4af37" stroke-width="6"/>
-                        <circle cx="175" cy="125" r="8" fill="#d4af37"/>
-                        <path d="M 20 180 Q 100 160 100 200 Q 100 160 180 180 V 220 Q 100 200 100 230 Q 100 200 20 220 Z" fill="none" stroke="#0b2b5c" stroke-width="6"/>
-                    </g>
-                    
-                    <text x="250" y="420" font-family="Segoe UI, Arial" font-size="20" font-weight="bold" fill="#0b2b5c" text-anchor="middle">ESTD. 1962</text>
-                </svg>
-
-                <div class="certificate-content">
-                    <h2 style="margin: 0; color: var(--primary-color); font-size: 24px;">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, COMILLA</h2>
-                    <p style="margin: 5px 0 0; font-size: 14px; font-weight: bold; color: #555;">BANGLADESH</p>
-                    
-                    <div class="certificate-title">SECONDARY SCHOOL CERTIFICATE EXAMINATION, 2025</div>
-                    
-                    <div class="certificate-body">
-                        This is to certify that <strong><span id="c-name"></span></strong>, 
-                        Son/Daughter of <strong><span id="c-father"></span></strong> and <strong><span id="c-mother"></span></strong>, 
-                        bearing Roll No. <strong><span id="c-id"></span></strong> from <strong><span id="c-school"></span></strong>, 
-                        Village/Area: <strong><span id="c-village"></span></strong>,
-                        has duly passed the <strong>Secondary School Certificate (SSC) Examination, 2025</strong> in Science/Humanities/Business Studies Group.
-                        <br><br>
-                        He/She has secured Grade / GPA: <strong><span id="c-grade" style="color: var(--secondary-color);"></span></strong>.
-                    </div>
-
-                    <div class="certificate-footer">
-                        <div class="signature-line">Date of Publication</div>
-                        <div class="signature-line"><span id="c-principal"></span><br>Controller of Examinations</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+  <div class="container">
+    <div class="nav-buttons">
+      <button class="btn" onclick="showSection('student-section')">Student Portal</button>
+      <button class="btn" onclick="showSection('admin-section')">Teacher/Admin Portal</button>
     </div>
 
-    <!-- Mobile-Friendly Redirect Firebase SDK Setup -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    <!-- User Bar -->
+    <div id="user-bar" class="user-info" style="display: none;">
+      <span id="user-email-display"></span>
+      <button class="btn btn-danger" onclick="handleLogout()">Logout</button>
+    </div>
 
-        // Your Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAM-Ic_kNUQynq1NoSqOWJ4lxpyB6zIxJ8",
-            authDomain: "shahjalal-h-g-c-u-42c7d.firebaseapp.com",
-            projectId: "shahjalal-h-g-c-u-42c7d",
-            storageBucket: "shahjalal-h-g-c-u-42c7d.firebasestorage.app",
-            messagingSenderId: "245322556441",
-            appId: "1:245322556441:web:4f94eaf04a3918cbfe7688"
-        };
+    <!-- STUDENT SECTION -->
+    <div id="student-section" class="section active">
+      <h2>Student Examination Portal</h2>
+      <div id="student-form-container">
+        <div class="form-group">
+          <label for="student-name">Full Name:</label>
+          <input type="text" id="student-name" placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+          <label for="student-roll">Roll/ID Number:</label>
+          <input type="text" id="student-roll" placeholder="Enter your roll number">
+        </div>
+        <button class="btn btn-success" onclick="startExam()">Start Examination</button>
+      </div>
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
+      <div id="exam-container" style="display: none;">
+        <hr>
+        <h3>MCQ Exam Paper</h3>
+        <div id="quiz-box"></div>
+        <button class="btn btn-success" onclick="submitExam()">Submit Exam</button>
+      </div>
 
-        // Check login state when returning to the page
-        getRedirectResult(auth)
-            .then((result) => {
-                if (result) {
-                    const user = result.user;
-                    if (user.email === "mshahjalal8586@gmail.com") {
-                        alert("স্বাগতম অ্যাডমিন! আপনার আসল জিমেইল দিয়ে সফলভাবে লগইন হয়েছে।");
-                        document.getElementById('admin-email-display').innerText = user.email;
-                        showSection('teacher-dashboard');
-                        renderSubmissionsTable();
-                    } else {
-                        alert("অ্যাক্সেস অস্বীকৃত! (" + user.email + ") নামের অ্যাকাউন্টটি অ্যাডমিন হিসেবে অনুমোদিত নয়।");
-                    }
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-                alert("লগইন ব্যর্থ হয়েছে: " + error.message);
-            });
+      <!-- Result & Certificate View -->
+      <div id="result-container" style="display: none;">
+        <h3>Exam Result</h3>
+        <p>Score: <span id="obtained-score"></span> / <span id="total-score"></span></p>
+        <p id="pass-fail-msg" style="font-weight: bold;"></p>
+        
+        <div id="certificate" style="display: none;">
+          <h2>CERTIFICATE OF ACHIEVEMENT</h2>
+          <p>This is to certify that</p>
+          <div class="student-name" id="cert-name">Student Name</div>
+          <p>has successfully passed the Online Examination conducted by</p>
+          <h3>Shahjalal High Government College University</h3>
+          <p>Score: <span id="cert-score"></span>% | Date: <span id="cert-date"></span></p>
+        </div>
+      </div>
+    </div>
 
-        // Google Redirect Login Function
-        window.handleGoogleLogin = function() {
-            signInWithRedirect(auth, provider);
-        };
-    </script>
+    <!-- ADMIN SECTION -->
+    <div id="admin-section" class="section">
+      <h2>Teacher / Admin Panel</h2>
+      
+      <!-- Login Box -->
+      <div id="admin-login-box">
+        <p>Strictly restricted to Authorized Teacher Admin (mshahjalal8586@gmail.com).</p>
+        <button class="btn" onclick="handleGoogleLogin()">Sign in with Google (Admin)</button>
+      </div>
 
-    <!-- Main Application Scripts -->
-    <script>
-        // Class 10 Bangla 50 MCQ Questions
-        let questions = [
-            { title: "১. 'বই পড়া' প্রবন্ধটি প্রমথ চৌধুরীর কোন গ্রন্থ থেকে নেওয়া হয়েছে?", options: ["প্রবন্ধ সংগ্রহ", "নীললোহিত", "বীরবলের হালখাতা", "অনুকথা"], correct: 0 },
-            { title: "২. 'শুভা' গল্পে শুভার প্রকৃত নাম কী ছিল?", options: ["সুভাষিণী", "সুকেশিনী", "সুহাসিনী", "সুচরিতা"], correct: 0 },
-            { title: "৩. 'আম আঁটির ভেঁপু' গল্পটি বিভূতিভূষণ বন্দ্যোপাধ্যায়ের কোন উপন্যাস থেকে নেওয়া হয়েছে?", options: ["অপরাজিত", "পথের পাঁচালী", "আরণ্যক", "ইচ্ছামতী"], correct: 1 },
-            { title: "৪. 'মানুষ মুহম্মদ (স.)' প্রবন্ধে কার মহানুভবতার কথা আলোচনা করা হয়েছে?", options: ["হযরত ওমর (রা.)", "হযরত আবু বকর (রা.)", "হযরত মুহম্মদ (স.)", "হযরত আলী (রা.)"], correct: 2 },
-            { title: "৫. 'নিমগাছ' গল্পের কবি আসলে নিমগাছের কিসের রূপক প্রকাশ করেছেন?", options: ["প্রকৃতি প্রেম", "গৃহকর্মনিপুণা লক্ষ্মী বউ", "পরিবেশ রক্ষা", "ভেষজ গুণ"], correct: 1 },
-            { title: "৬. 'উপেক্ষিত শক্তির উদ্বোধন' প্রবন্ধের লেখক কে?", options: ["কাজী নজরুল ইসলাম", "রবীন্দ্রনাথ ঠাকুর", "বঙ্কিমচন্দ্র চট্টোপাধ্যায়", "প্রমথ চৌধুরী"], correct: 0 },
-            { title: "৭. 'শিক্ষা ও মনুষ্যত্ব' প্রবন্ধে শিক্ষার আসল কাজ কী বলা হয়েছে?", options: ["জ্ঞান পরিবেশন", "মূল্যবোধ সৃষ্টি", "জীবিকা নির্বাহ", "ডিগ্রি অর্জন"], correct: 1 },
-            { title: "৮. 'প্রবাস বন্ধু' গল্পে আবদুর রহমান কোন দেশের নাগরিক ছিল?", options: ["পাকিস্তান", "ইরান", "আফগানিস্তান", "মিশর"], correct: 2 },
-            { title: "৯. 'মমতাদি' গল্পে মমতাদির বেতন কত টাকা ঠিক হয়েছিল?", options: ["১২ টাকা", "১৫ টাকা", "২০ টাকা", "২৫ টাকা"], correct: 1 },
-            { title: "১০. '৭১-এর দিনগুলি' রচনাটি কোন জাতীয় সাহিত্য?", options: ["উপন্যাস", "দিনলিপি বা ডায়েরি", "নাটক", "ছোটগল্প"], correct: 1 },
-            { title: "১১. 'সাহিত্য-খেলা' ও 'লাইব্রেরি' প্রতিষ্ঠার কথা কোন প্রবন্ধে জোর দেওয়া হয়েছে?", options: ["বই পড়া", "শিক্ষা ও মনুষ্যত্ব", "জাগো গো ভগিনী", "বঙবাণী"], correct: 0 },
-            { title: "১২. 'বঙ্গবাণী' কবিতাটি কার লেখা?", options: ["মাইকেল মধুসূদন দত্ত", "আব্দুল হাকিম", "ফাররুখ আহমদ", "কাজী নজরুল ইসলাম"], correct: 1 },
-            { title: "১৩. 'কপোতাক্ষ নদ' কোন ধরনের কবিতা?", options: ["গীতিকবিতা", "চতুর্দশপদী (সনেট)", "মহাকাব্য", "গাথা কবিতা"], correct: 1 },
-            { title: "১৪. 'কপোতাক্ষ নদ' কবিতায় অষ্টকের অমিল বিন্যাস কেমন?", options: ["কখকখ কখকখ", "কখকখ গঘগঘ", "কখখক কখখক", "কখগ কখগ"], correct: 2 },
-            { title: "১৫. 'জীবন-সংগীত' কবিতার মূল বার্তা কী?", options: ["সংসার ত্যাগ করা", "কর্মবিমুখ হওয়া", "কর্মের মাধ্যমে জীবনকে সার্থক করা", "সুখের সন্ধান করা"], correct: 2 },
-            { title: "১৬. 'মানুষ' কবিতায় মোল্লা সাহেব কাকে মসজিদ থেকে তাড়িয়ে দিয়েছিল?", options: ["ভিক্ষুককে", "ভূখারি বা ক্ষুধার্ত পথিককে", "পথচারীকে", "অসুস্থ মানুষকে"], correct: 1 },
-            { title: "১৭. 'সেই দিন এই মাঠ' কবিতায় কোন নদীর কথা বলা হয়েছে?", options: ["মেঘনা", "সুরমা", "ধানসিঁড়ি", "কপোতাক্ষ"], correct: 2 },
-            { title: "১৮. 'পল্লীজননী' কবিতায় ছেলেটি কার সাথে মেলায় যাওয়ার বায়না করেছিল?", options: ["রহিমের সাথে", "আয়মানের সাথে", "আজিজের সাথে", "করিমের সাথে"], correct: 1 },
-            { title: "১৯. 'রানার' কবিতার রানারের প্রধান কাজ কী?", options: ["চিঠি পৌঁছে দেওয়া", "পাহারা দেওয়া", "দৌড়ানো", "সংবাদপত্র বিক্রি করা"], correct: 0 },
-            { title: "২০. 'তোমাকে পাওয়ার জন্যে, হে স্বাধীনতা' কবিতায় কার কপাল ভাঙল?", options: ["সাকিনা বিবির", "সিঁথির সিঁদুর মুছে যাওয়া হরিদাসীর", "থুথুরে বুড়োর", "অবুঝ শিশুর"], correct: 1 },
-            { title: "২১. 'স্বাধীনতা, এই শব্দটি কীভাবে আমাদের হলো' কবিতায় কোন ঐতিহাসিক ভাষণের কথা আছে?", options: ["৭ই মার্চের ভাষণ", "২৬শে মার্চের ভাষণ", "১৭ই এপ্রিলের ভাষণ", "১৬ই ডিসেম্বরের ভাষণ"], correct: 0 },
-            { title: "২২. 'আমার পরিচয়' কবিতায় বাঙালি জাতির উৎস হিসেবে কোন চিত্রকলার কথা আছে?", options: ["পটুয়াচিত্র", "চর্যাপদ", "শাঁখারি শিল্প", "নকশীকাঁথা"], correct: 1 },
-            { title: "২৩. 'সাহসী জননী বাংলা' কবিতায় কাদের 'অসুর' বলা হয়েছে?", options: ["ব্রিটিশদের", "পাকিস্তানি হানাদার বাহিনীকে", "রাজাকারদের", "ডাকাতদের"], correct: 1 },
-            { title: "২৪. 'কাকতাড়ুয়া' উপন্যাসের কেন্দ্রীয় চরিত্রের নাম কী?", options: ["বুধা", "কানু", "আলী", "নলকাকু"], correct: 0 },
-            { title: "২৫. 'বহিপীর' নাটকের বহিপীর কার বাড়িতে আশ্রয় নিয়েছিল?", options: ["হাতেম আলির", "জমিদার তাহেরের", "খোদেজার", "হাশেমের"], correct: 0 },
-            { title: "২৬. 'বহিপীর' নাটকের তাহেরা কোন চরিত্রকে বিয়ে করতে অস্বীকার করে?", options: ["হাশেম আলী", "বহিপীর", "জমিদার", "রস্তম আলী"], correct: 1 },
-            { title: "২৭. বাংলা ভাষার মূল উৎস কী?", options: ["বৈদিক ভাষা", "প্রাকৃত ভাষা", "ইন্দো-ইউরোপীয় ভাষা", "সংস্কৃত ভাষা"], correct: 2 },
-            { title: "২৮. বাংলা ভাষার বর্ণমালায় মোট বর্ণ কয়টি?", options: ["৩৯টি", "১১টি", "৫০টি", "৪৫টি"], correct: 2 },
-            { title: "২৯. স্বরবর্ণের সংক্ষিপ্ত রূপকে কী বলা হয়?", options: ["ফলা", "কার", "মাত্রা", "যতি"], correct: 1 },
-            { title: "৩০. ব্যঞ্জনবর্ণের সংক্ষিপ্ত রূপকে কী বলা হয়?", options: ["কার", "ফলা", "যুক্তবর্ণ", "উপসর্গ"], correct: 1 },
-            { title: "৩১. কার চিহ্ন কয়টি?", options: ["৮টি", "৯টি", "১০টি", "১১টি"], correct: 2 },
-            { title: "৩২. ফলা চিহ্ন কয়টি?", options: ["৫টি", "৬টি", "৭টি", "৮টি"], correct: 1 },
-            { title: "৩৩. ব্যাকরণের প্রধান আলোচ্য বিষয় কয়টি?", options: ["২টি", "৩টি", "৪টি", "৫টি"], correct: 2 },
-            { title: "৩৪. 'সন্ধি' ব্যাকরণের কোন অংশে আলোচিত হয়?", options: ["রূপতত্ত্ব", "ধ্বনি তত্ত্ব", "বাক্যতত্ত্ব", "অর্থতত্ত্ব"], correct: 1 },
-            { title: "৩৫. 'সমাস' শব্দের অর্থ কী?", options: ["সংক্ষেপণ", "সংযোজন", "বিশ্লেষণ", "পরিবর্তন"], correct: 0 },
-            { title: "৩৬. সমাস প্রধানত কয় প্রকার?", options: ["৪ প্রকার", "৫ প্রকার", "৬ প্রকার", "৮ প্রকার"], correct: 2 },
-            { title: "৩৭. যে সমাসে ব্যাসবাক্যের প্রতিটি পদের অর্থ প্রাধান্য পায় তাকে কী বলে?", options: ["দ্বিগু সমাস", "দ্বন্দ্ব সমাস", "বহুব্রীহি সমাস", "অব্যয়ীভাব সমাস"], correct: 1 },
-            { title: "৩৮. অনুসর্গ অন্য কী নামে পরিচিত?", options: ["উপসর্গ", "কর্মপ্রবচনীয়", "সংযোজক অব্যয়", "ধাতু"], correct: 1 },
-            { title: "৩৯. খাঁটি বাংলা উপসর্গ কয়টি?", options: ["১৯টি", "২০টি", "২১টি", "২৫টি"], correct: 2 },
-            { title: "৪০. তৎসম বা সংস্কৃত উপসর্গ কয়টি?", options: ["১৫টি", "২০টি", "২১টি", "২৪টি"], correct: 1 },
-            { title: "৪১. 'সূর্য' শব্দের সমার্থক শব্দ কোনটি?", options: ["শশী", "আদিত্য", "পবন", "অম্বু"], correct: 1 },
-            { title: "৪২. 'আকাশ' শব্দের সমার্থক শব্দ কোনটি?", options: ["অম্বুর", "গগন", "বসুধা", "ধরণী"], correct: 1 },
-            { title: "৪৩. 'অনিল' শব্দের অর্থ কী?", options: ["আগুন", "বাতাস", "পানি", "আকাশ"], correct: 1 },
-            { title: "৪৪. 'অনল' শব্দের অর্থ কী?", options: ["বাতাস", "আগুন", "আলো", "পানি"], correct: 1 },
-            { title: "৪৫. বাক্যের মৌলিক উপাদান কোনটি?", options: ["বর্ণ", "শব্দ", "ধ্বনি", "শব্দগুচ্ছ"], correct: 1 },
-            { title: "৪৬. ভাষার ক্ষুদ্রতম একক কোনটি?", options: ["শব্দ", "বাক্য", "ধ্বনি", "বর্ণ"], correct: 2 },
-            { title: "৪৭. কোনটি সকর্মক ক্রিয়ার উদাহরণ?", options: ["সে ঘুমায়", "ছেলেটি ফুটবল খেলছে", "বৃষ্টি পড়ে", "মেয়েটি হাসে"], correct: 1 },
-            { title: "৪৮. 'অগাধ জলের মাছ' বাগধারাটির অর্থ কী?", options: ["সহজ মানুষ", "খুব চালাক ব্যক্তি", "অসহায় লোক", "বোকা লোক"], correct: 1 },
-            { title: "৪৯. 'বিড়াল তপস্বী' বাগধারাটির অর্থ কী?", options: ["ভণ্ড সাধু", "দয়ালু ব্যক্তি", "সৎ লোক", "পাপী লোক"], correct: 0 },
-            { title: "৫০. 'আকাশ কুসুম' বাগধারাটির অর্থ কী?", options: ["আকাশের ফুল", "অসম্ভব কল্পনা", "সুন্দর দৃশ্য", "মূল্যবান বস্তু"], correct: 1 }
-        ];
+      <!-- Admin Control Panel -->
+      <div id="admin-panel" style="display: none;">
+        <h3>Question Management</h3>
+        
+        <div style="background: #eef2f7; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+          <h4>Add New Question</h4>
+          <div class="form-group">
+            <label>Question Statement:</label>
+            <input type="text" id="q-text" placeholder="Enter question">
+          </div>
+          <div class="form-group">
+            <label>Option A:</label>
+            <input type="text" id="opt-a" placeholder="Option A">
+          </div>
+          <div class="form-group">
+            <label>Option B:</label>
+            <input type="text" id="opt-b" placeholder="Option B">
+          </div>
+          <div class="form-group">
+            <label>Option C:</label>
+            <input type="text" id="opt-c" placeholder="Option C">
+          </div>
+          <div class="form-group">
+            <label>Option D:</label>
+            <input type="text" id="opt-d" placeholder="Option D">
+          </div>
+          <div class="form-group">
+            <label>Correct Answer Index (0 for A, 1 for B, 2 for C, 3 for D):</label>
+            <select id="correct-opt">
+              <option value="0">Option A</option>
+              <option value="1">Option B</option>
+              <option value="2">Option C</option>
+              <option value="3">Option D</option>
+            </select>
+          </div>
+          <button class="btn btn-success" onclick="addQuestion()">Add Question</button>
+        </div>
 
-        let studentSubmissions = JSON.parse(localStorage.getItem('ssc_exam_submissions')) || [];
-        let currentStudentExam = null;
-        let selectedSubmissionIndex = null;
+        <h4>Current Question Bank</h4>
+        <div id="admin-questions-list"></div>
+      </div>
+    </div>
+  </div>
 
-        function saveToStorage() {
-            localStorage.setItem('ssc_exam_submissions', JSON.stringify(studentSubmissions));
+  <script>
+    // FIREBASE CONFIGURATION
+    const firebaseConfig = {
+      apiKey: "AIzaSyAhD_DEMO_KEY_REPLACE_IF_NEEDED",
+      authDomain: "shahjalal-h-g-c-u-42c7d.firebaseapp.com",
+      projectId: "shahjalal-h-g-c-u-42c7d",
+      storageBucket: "shahjalal-h-g-c-u-42c7d.appspot.com",
+      messagingSenderId: "1234567890",
+      appId: "1:1234567890:web:abcdef123456"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const auth = firebase.auth();
+    const ADMIN_EMAIL = "mshahjalal8586@gmail.com";
+
+    let questions = JSON.parse(localStorage.getItem('exam_questions')) || [
+      {
+        question: "What is the capital of Bangladesh?",
+        options: ["Dhaka", "Chittagong", "Sylhet", "Rajshahi"],
+        correct: 0
+      },
+      {
+        question: "Shahjalal High Government College University offers which courses?",
+        options: ["Engineering", "General Studies", "Higher Education", "All of the above"],
+        correct: 3
+      }
+    ];
+
+    function saveQuestions() {
+      localStorage.setItem('exam_questions', JSON.stringify(questions));
+    }
+
+    function showSection(sectionId) {
+      document.querySelectorAll('.section').forEach(function(sec) {
+        sec.classList.remove('active');
+      });
+      document.getElementById(sectionId).classList.add('active');
+    }
+
+    auth.onAuthStateChanged(function(user) {
+      if (user) {
+        if (user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+          document.getElementById('admin-login-box').style.display = 'none';
+          document.getElementById('admin-panel').style.display = 'block';
+          document.getElementById('user-bar').style.display = 'flex';
+          document.getElementById('user-email-display').innerText = "Logged in as Admin: " + user.email;
+          renderAdminQuestions();
+        } else {
+          alert("Access Denied: Only " + ADMIN_EMAIL + " is authorized as Admin.");
+          auth.signOut();
         }
+      } else {
+        document.getElementById('admin-login-box').style.display = 'block';
+        document.getElementById('admin-panel').style.display = 'none';
+        document.getElementById('user-bar').style.display = 'none';
+      }
+    });
 
-        function showSection(sectionId) {
-            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active-section'));
-            document.getElementById(sectionId).classList.add('active-section');
+    auth.getRedirectResult().then(function(result) {
+      if (result && result.user) {
+        console.log("Logged in user:", result.user.email);
+      }
+    }).catch(function(error) {
+      console.error("Auth redirect error:", error);
+    });
+
+    function handleGoogleLogin() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithRedirect(provider);
+    }
+
+    function handleLogout() {
+      auth.signOut().then(function() {
+        alert("Logged out successfully.");
+      });
+    }
+
+    function renderAdminQuestions() {
+      const container = document.getElementById('admin-questions-list');
+      container.innerHTML = '';
+      questions.forEach(function(q, index) {
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.innerHTML = 
+          '<h4>' + (index + 1) + '. ' + q.question + '</h4>' +
+          '<p>Options: ' + q.options.join(', ') + '</p>' +
+          '<p><strong>Correct Option:</strong> ' + q.options[q.correct] + '</p>' +
+          '<button class="btn btn-danger" onclick="deleteQuestion(' + index + ')">Delete Question</button>';
+        container.appendChild(card);
+      });
+    }
+
+    function addQuestion() {
+      const qText = document.getElementById('q-text').value;
+      const optA = document.getElementById('opt-a').value;
+      const optB = document.getElementById('opt-b').value;
+      const optC = document.getElementById('opt-c').value;
+      const optD = document.getElementById('opt-d').value;
+      const correctIdx = parseInt(document.getElementById('correct-opt').value);
+
+      if (!qText || !optA || !optB || !optC || !optD) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      questions.push({
+        question: qText,
+        options: [optA, optB, optC, optD],
+        correct: correctIdx
+      });
+
+      saveQuestions();
+      renderAdminQuestions();
+
+      document.getElementById('q-text').value = '';
+      document.getElementById('opt-a').value = '';
+      document.getElementById('opt-b').value = '';
+      document.getElementById('opt-c').value = '';
+      document.getElementById('opt-d').value = '';
+      alert("Question added successfully!");
+    }
+
+    function deleteQuestion(index) {
+      if (confirm("Are you sure you want to delete this question?")) {
+        questions.splice(index, 1);
+        saveQuestions();
+        renderAdminQuestions();
+      }
+    }
+
+    function startExam() {
+      const name = document.getElementById('student-name').value;
+      const roll = document.getElementById('student-roll').value;
+
+      if (!name || !roll) {
+        alert("Please provide your name and roll number.");
+        return;
+      }
+
+      if (questions.length === 0) {
+        alert("No questions available in the exam paper. Please contact teacher.");
+        return;
+      }
+
+      document.getElementById('student-form-container').style.display = 'none';
+      document.getElementById('exam-container').style.display = 'block';
+
+      const quizBox = document.getElementById('quiz-box');
+      quizBox.innerHTML = '';
+
+      questions.forEach(function(q, index) {
+        const qCard = document.createElement('div');
+        qCard.className = 'question-card';
+        let optionsHTML = '';
+        q.options.forEach(function(opt, optIndex) {
+          optionsHTML += 
+            '<label>' +
+              '<input type="radio" name="question-' + index + '" value="' + optIndex + '"> ' + opt +
+            '</label><br>';
+        });
+
+        qCard.innerHTML = 
+          '<p><strong>Q' + (index + 1) + ': ' + q.question + '</strong></p>' +
+          optionsHTML;
+        quizBox.appendChild(qCard);
+      });
+    }
+
+    function submitExam() {
+      let score = 0;
+      questions.forEach(function(q, index) {
+        const selectedOption = document.querySelector('input[name="question-' + index + '"]:checked');
+        if (selectedOption && parseInt(selectedOption.value) === q.correct) {
+          score++;
         }
+      });
 
-        function handleStudentLogin(e) {
-            e.preventDefault();
-            const email = document.getElementById('student-email-input').value;
-            const studentId = parseInt(document.getElementById('student-id-input').value);
+      document.getElementById('exam-container').style.display = 'none';
+      document.getElementById('result-container').style.display = 'block';
 
-            if(studentId >= 1 && studentId <= 50) {
-                const existingIndex = studentSubmissions.findIndex(s => s.studentId === studentId && s.email === email);
-                
-                if(existingIndex !== -1) {
-                    const sub = studentSubmissions[existingIndex];
-                    showSection('student-status-view');
-                    document.getElementById('status-text').innerText = sub.status;
-                    document.getElementById('status-text').style.color = sub.status === 'Approved' ? 'green' : 'orange';
+      const total = questions.length;
+      const percentage = (score / total) * 100;
 
-                    const btnArea = document.getElementById('cert-download-btn-area');
-                    if(sub.status === 'Approved') {
-                        btnArea.innerHTML = `<button class="btn btn-success" onclick="loadStudentCert(${existingIndex})">View / Print Board Certificate</button>`;
-                    } else {
-                        btnArea.innerHTML = `<p>Your Exam Result: <strong>${sub.score} / 100 (${sub.grade})</strong>. Waiting for teacher approval.</p>`;
-                    }
-                } else {
-                    currentStudentExam = { studentId, email };
-                    showSection('exam-screen');
-                    startExamTimer(50 * 60);
-                    renderExamQuestions();
-                }
-            } else {
-                alert("Invalid Student ID! Allowed IDs are 1 to 50.");
-            }
-        }
+      document.getElementById('obtained-score').innerText = score;
+      document.getElementById('total-score').innerText = total;
 
-        function renderExamQuestions() {
-            const container = document.getElementById('exam-questions-container');
-            container.innerHTML = '';
+      const passMsg = document.getElementById('pass-fail-msg');
+      if (percentage >= 50) {
+        passMsg.innerText = "Congratulations! You Passed.";
+        passMsg.style.color = "green";
 
-            questions.forEach((q, idx) => {
-                container.innerHTML += `
-                    <div class="question-card">
-                        <p><strong>${q.title}</strong> (Marks: 2)</p>
-                        ${q.options.map((opt, i) => `
-                            <label style="display:block; margin: 5px 0;">
-                                <input type="radio" name="q_${idx}" value="${i}"> ${opt}
-                            </label>
-                        `).join('')}
-                    </div>
-                `;
-            });
-        }
-
-        function startExamTimer(duration) {
-            let timer = duration, minutes, seconds;
-            const display = document.getElementById('timer-display');
-            const interval = setInterval(function () {
-                minutes = parseInt(timer / 60, 10);
-                seconds = parseInt(timer % 60, 10);
-
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                display.textContent = minutes + ":" + seconds;
-
-                if (--timer < 0) {
-                    clearInterval(interval);
-                    alert("Time's up! Submitting exam automatically.");
-                    document.getElementById('exam-form').dispatchEvent(new Event('submit'));
-                }
-            }, 1000);
-        }
-
-        function submitExam(e) {
-            e.preventDefault();
-            let score = 0;
-            let studentAnswers = [];
-
-            questions.forEach((q, idx) => {
-                const selected = document.querySelector(`input[name="q_${idx}"]:checked`);
-                const ansValue = selected ? parseInt(selected.value) : null;
-                
-                if(ansValue === q.correct) {
-                    score += 2;
-                }
-
-                studentAnswers.push({
-                    questionIndex: idx,
-                    selectedOption: ansValue,
-                    isCorrect: ansValue === q.correct
-                });
-            });
-
-            let grade = 'F';
-            if (score >= 80) grade = 'GPA 5.00 (A+)';
-            else if (score >= 70) grade = 'GPA 4.00 (A)';
-            else if (score >= 60) grade = 'GPA 3.50 (A-)';
-            else if (score >= 50) grade = 'GPA 3.00 (B)';
-            else if (score >= 40) grade = 'GPA 2.00 (C)';
-
-            studentSubmissions.push({
-                studentId: currentStudentExam.studentId,
-                email: currentStudentExam.email,
-                score: score,
-                grade: grade,
-                answers: studentAnswers,
-                status: 'Pending Review',
-                certDetails: null
-            });
-
-            saveToStorage();
-            alert("Your Answer Script has been saved and submitted to your Teacher!");
-            showSection('student-login');
-        }
-
-        function renderSubmissionsTable() {
-            const tbody = document.getElementById('submissions-list');
-            tbody.innerHTML = '';
-
-            if(studentSubmissions.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">No answer scripts submitted yet.</td></tr>`;
-                return;
-            }
-
-            studentSubmissions.forEach((sub, idx) => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td><strong>Roll ${sub.studentId}</strong></td>
-                        <td>${sub.email}</td>
-                        <td><span style="color: ${sub.status === 'Approved' ? 'green' : 'orange'}; font-weight:bold;">${sub.status}</span></td>
-                        <td>${sub.score} / 100 (${sub.grade})</td>
-                        <td>
-                            <button class="btn btn-primary" onclick="reviewScript(${idx})">Check Script & Issue Cert</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        function reviewScript(index) {
-            selectedSubmissionIndex = index;
-            const sub = studentSubmissions[index];
-
-            document.getElementById('review-student-info').innerHTML = `
-                <strong>Student Roll/ID:</strong> ${sub.studentId} | 
-                <strong>Email:</strong> ${sub.email} | 
-                <strong>Auto Calculated Score:</strong> ${sub.score}/100 (${sub.grade})
-            `;
-
-            document.getElementById('rev-grade').value = sub.grade;
-            if(sub.certDetails) {
-                document.getElementById('rev-name').value = sub.certDetails.name || '';
-                document.getElementById('rev-father').value = sub.certDetails.father || '';
-                document.getElementById('rev-mother').value = sub.certDetails.mother || '';
-            }
-
-            const container = document.getElementById('review-answers-container');
-            container.innerHTML = '';
-
-            sub.answers.forEach((ans, i) => {
-                const q = questions[i];
-                const studentChoiceText = ans.selectedOption !== null ? q.options[ans.selectedOption] : 'Not Answered';
-                const correctChoiceText = q.options[q.correct];
-
-                container.innerHTML += `
-                    <div class="question-card" style="border-left: 5px solid ${ans.isCorrect ? '#28a745' : '#dc3545'};">
-                        <p><strong>Q${i+1}: ${q.title}</strong></p>
-                        <p>Student Answer: <strong style="color: ${ans.isCorrect ? 'green' : 'red'};">${studentChoiceText}</strong></p>
-                        <p>Correct Answer: <strong>${correctChoiceText}</strong></p>
-                    </div>
-                `;
-            });
-
-            showSection('script-review');
-        }
-
-        function approveAndGenerateCert() {
-            const sub = studentSubmissions[selectedSubmissionIndex];
-            const name = document.getElementById('rev-name').value;
-            const father = document.getElementById('rev-father').value;
-            const mother = document.getElementById('rev-mother').value;
-
-            if(!name || !father || !mother) {
-                alert("Please fill in Student Name, Father's Name and Mother's Name.");
-                return;
-            }
-
-            sub.status = 'Approved';
-            sub.certDetails = {
-                name: name,
-                father: father,
-                mother: mother,
-                school: "Shahjalal High Government College University",
-                village: "Kamal-Nagar, Lakshmipur",
-                principal: "Mohammad Shahjalal"
-            };
-
-            saveToStorage();
-
-            document.getElementById('c-id').innerText = sub.studentId;
-            document.getElementById('c-name').innerText = name;
-            document.getElementById('c-school').innerText = sub.certDetails.school;
-            document.getElementById('c-father').innerText = father;
-            document.getElementById('c-mother').innerText = mother;
-            document.getElementById('c-grade').innerText = sub.grade;
-            document.getElementById('c-village').innerText = sub.certDetails.village;
-            document.getElementById('c-principal').innerText = sub.certDetails.principal;
-
-            showSection('certificate-view');
-        }
-
-        function loadStudentCert(index) {
-            const sub = studentSubmissions[index];
-            const cert = sub.certDetails;
-
-            document.getElementById('c-id').innerText = sub.studentId;
-            document.getElementById('c-name').innerText = cert.name;
-            document.getElementById('c-school').innerText = cert.school;
-            document.getElementById('c-father').innerText = cert.father;
-            document.getElementById('c-mother').innerText = cert.mother;
-            document.getElementById('c-grade').innerText = sub.grade;
-            document.getElementById('c-village').innerText = cert.village;
-            document.getElementById('c-principal').innerText = cert.principal;
-
-            showSection('certificate-view');
-        }
-
-        function clearAllSubmissions() {
-            if(confirm("Are you sure you want to clear all student exam submissions?")) {
-                localStorage.removeItem('ssc_exam_submissions');
-                studentSubmissions = [];
-                renderSubmissionsTable();
-            }
-        }
-
-        function generateCertificate(e) {
-            e.preventDefault();
-            document.getElementById('c-id').innerText = document.getElementById('cert-id').value;
-            document.getElementById('c-name').innerText = document.getElementById('cert-name').value;
-            document.getElementById('c-school').innerText = document.getElementById('cert-school').value;
-            document.getElementById('c-father').innerText = document.getElementById('cert-father').value;
-            document.getElementById('c-mother').innerText = document.getElementById('cert-mother').value;
-            document.getElementById('c-grade').innerText = document.getElementById('cert-grade').value;
-            document.getElementById('c-village').innerText = document.getElementById('cert-village').value;
-            document.getElementById('c-principal').innerText = document.getElementById('cert-principal').value;
-
-            showSection('certificate-view');
-        }
-    </script>
+        document.getElementById('certificate').style.display = 'block';
+        document.getElementById('cert-name').innerText = document.getElementById('student-name').value;
+        document.getElementById('cert-score').innerText = percentage.toFixed(1);
+        document.getElementById('cert-date').innerText = new Date().toLocaleDateString();
+      } else {
+        passMsg.innerText = "Sorry! You did not pass. Try again.";
+        passMsg.style.color = "red";
+      }
+    }
+  </script>
 </body>
 </html>
