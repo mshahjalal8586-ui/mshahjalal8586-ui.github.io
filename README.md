@@ -1,1 +1,493 @@
-# mshahjalal8586-ui.github.io
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shahjalal High Government College University - Exam System</title>
+  <style>
+    :root {
+      --primary-color: #0b2b5c;
+      --secondary-color: #cd6e38;
+      --accent-color: #d4af37;
+      --light-bg: #f4f7f6;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--light-bg);
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary-color), #1a4a8d);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 26px;
+    }
+
+    header p {
+      margin: 5px 0 0 0;
+      color: var(--accent-color);
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .nav-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background-color: var(--secondary-color);
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+    }
+
+    .btn-success {
+      background-color: #28a745;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .active {
+      display: block;
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"], input[type="number"], select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .question-card {
+      border: 1px solid #e0e0e0;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      background: #fafafa;
+    }
+
+    .question-card h4 {
+      margin-top: 0;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    /* Certificate Styles */
+    #certificate {
+      border: 10px solid var(--primary-color);
+      padding: 40px;
+      text-align: center;
+      background: #fff;
+      position: relative;
+      margin-top: 20px;
+    }
+
+    #certificate h2 {
+      color: var(--primary-color);
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    #certificate .student-name {
+      font-size: 28px;
+      color: var(--secondary-color);
+      border-bottom: 2px solid var(--secondary-color);
+      display: inline-block;
+      padding: 0 20px;
+      margin: 20px 0;
+    }
+
+    .user-info {
+      background: #e9ecef;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+
+  <!-- Firebase App & Auth SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+
+  <header>
+    <h1>Shahjalal High Government College University</h1>
+    <p>Online MCQ Examination & Certification System</p>
+  </header>
+
+  <div class="container">
+    <div class="nav-buttons">
+      <button class="btn" onclick="showSection('student-section')">Student Portal</button>
+      <button class="btn" onclick="showSection('admin-section')">Teacher/Admin Portal</button>
+    </div>
+
+    <!-- User Bar -->
+    <div id="user-bar" class="user-info" style="display: none;">
+      <span id="user-email-display"></span>
+      <button class="btn btn-danger" onclick="handleLogout()">Logout</button>
+    </div>
+
+    <!-- STUDENT SECTION -->
+    <div id="student-section" class="section active">
+      <h2>Student Examination Portal</h2>
+      <div id="student-form-container">
+        <div class="form-group">
+          <label for="student-name">Full Name:</label>
+          <input type="text" id="student-name" placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+          <label for="student-roll">Roll/ID Number:</label>
+          <input type="text" id="student-roll" placeholder="Enter your roll number">
+        </div>
+        <button class="btn btn-success" onclick="startExam()">Start Examination</button>
+      </div>
+
+      <div id="exam-container" style="display: none;">
+        <hr>
+        <h3>MCQ Exam Paper</h3>
+        <div id="quiz-box"></div>
+        <button class="btn btn-success" onclick="submitExam()">Submit Exam</button>
+      </div>
+
+      <!-- Result & Certificate View -->
+      <div id="result-container" style="display: none;">
+        <h3>Exam Result</h3>
+        <p>Score: <span id="obtained-score"></span> / <span id="total-score"></span></p>
+        <p id="pass-fail-msg" style="font-weight: bold;"></p>
+        
+        <div id="certificate" style="display: none;">
+          <h2>CERTIFICATE OF ACHIEVEMENT</h2>
+          <p>This is to certify that</p>
+          <div class="student-name" id="cert-name">Student Name</div>
+          <p>has successfully passed the Online Examination conducted by</p>
+          <h3>Shahjalal High Government College University</h3>
+          <p>Score: <span id="cert-score"></span>% | Date: <span id="cert-date"></span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMIN SECTION -->
+    <div id="admin-section" class="section">
+      <h2>Teacher / Admin Panel</h2>
+      
+      <!-- Login Box -->
+      <div id="admin-login-box">
+        <p>Strictly restricted to Authorized Teacher Admin (mshahjalal8586@gmail.com).</p>
+        <button class="btn" onclick="handleGoogleLogin()">Sign in with Google (Admin)</button>
+      </div>
+
+      <!-- Admin Control Panel -->
+      <div id="admin-panel" style="display: none;">
+        <h3>Question Management</h3>
+        
+        <div style="background: #eef2f7; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+          <h4>Add New Question</h4>
+          <div class="form-group">
+            <label>Question Statement:</label>
+            <input type="text" id="q-text" placeholder="Enter question">
+          </div>
+          <div class="form-group">
+            <label>Option A:</label>
+            <input type="text" id="opt-a" placeholder="Option A">
+          </div>
+          <div class="form-group">
+            <label>Option B:</label>
+            <input type="text" id="opt-b" placeholder="Option B">
+          </div>
+          <div class="form-group">
+            <label>Option C:</label>
+            <input type="text" id="opt-c" placeholder="Option C">
+          </div>
+          <div class="form-group">
+            <label>Option D:</label>
+            <input type="text" id="opt-d" placeholder="Option D">
+          </div>
+          <div class="form-group">
+            <label>Correct Answer Index (0 for A, 1 for B, 2 for C, 3 for D):</label>
+            <select id="correct-opt">
+              <option value="0">Option A</option>
+              <option value="1">Option B</option>
+              <option value="2">Option C</option>
+              <option value="3">Option D</option>
+            </select>
+          </div>
+          <button class="btn btn-success" onclick="addQuestion()">Add Question</button>
+        </div>
+
+        <h4>Current Question Bank</h4>
+        <div id="admin-questions-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- FIREBASE CONFIGURATION ---
+    const firebaseConfig = {
+      apiKey: "AIzaSyAhD_DEMO_KEY_REPLACE_IF_NEEDED",
+      authDomain: "shahjalal-h-g-c-u-42c7d.firebaseapp.com",
+      projectId: "shahjalal-h-g-c-u-42c7d",
+      storageBucket: "shahjalal-h-g-c-u-42c7d.appspot.com",
+      messagingSenderId: "1234567890",
+      appId: "1:1234567890:web:abcdef123456"
+    };
+
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const auth = firebase.auth();
+    const ADMIN_EMAIL = "mshahjalal8586@gmail.com";
+
+    // --- QUESTION BANK DATA (Stored in LocalStorage) ---
+    let questions = JSON.parse(localStorage.getItem('exam_questions')) || [
+      {
+        question: "What is the capital of Bangladesh?",
+        options: ["Dhaka", "Chittagong", "Sylhet", "Rajshahi"],
+        correct: 0
+      },
+      {
+        question: "Shahjalal High Government College University offers which courses?",
+        options: ["Engineering", "General Studies", "Higher Education", "All of the above"],
+        correct: 3
+      }
+    ];
+
+    function saveQuestions() {
+      localStorage.setItem('exam_questions', JSON.stringify(questions));
+    }
+
+    // --- UI TOGGLING ---
+    function showSection(sectionId) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(sectionId).classList.add('active');
+    }
+
+    // --- AUTHENTICATION ---
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        if (user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+          document.getElementById('admin-login-box').style.display = 'none';
+          document.getElementById('admin-panel').style.display = 'block';
+          document.getElementById('user-bar').style.display = 'flex';
+          document.getElementById('user-email-display').innerText = "Logged in as Admin: " + user.email;
+          renderAdminQuestions();
+        } else {
+          alert("Access Denied: Only " + ADMIN_EMAIL + " is authorized as Admin.");
+          auth.signOut();
+        }
+      } else {
+        document.getElementById('admin-login-box').style.display = 'block';
+        document.getElementById('admin-panel').style.display = 'none';
+        document.getElementById('user-bar').style.display = 'none';
+      }
+    });
+
+    // Check Redirect Results for Mobile Login
+    auth.getRedirectResult().then((result) => {
+      if (result.user) {
+        console.log("Logged in user:", result.user.email);
+      }
+    }).catch((error) => {
+      console.error("Auth redirect error:", error);
+    });
+
+    function handleGoogleLogin() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithRedirect(provider);
+    }
+
+    function handleLogout() {
+      auth.signOut().then(() => {
+        alert("Logged out successfully.");
+      });
+    }
+
+    // --- ADMIN QUESTION MANAGEMENT ---
+    function renderAdminQuestions() {
+      const container = document.getElementById('admin-questions-list');
+      container.innerHTML = '';
+      questions.forEach((q, index) => {
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.innerHTML = `
+          <h4>${index + 1}. ${q.question}</h4>
+          <p>Options: ${q.options.join(', ')}</p>
+          <p><strong>Correct Option:</strong> ${q.options[q.correct]}</p>
+          <button class="btn btn-danger" onclick="deleteQuestion(${index})">Delete Question</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function addQuestion() {
+      const qText = document.getElementById('q-text').value;
+      const optA = document.getElementById('opt-a').value;
+      const optB = document.getElementById('opt-b').value;
+      const optC = document.getElementById('opt-c').value;
+      const optD = document.getElementById('opt-d').value;
+      const correctIdx = parseInt(document.getElementById('correct-opt').value);
+
+      if (!qText || !optA || !optB || !optC || !optD) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      questions.push({
+        question: qText,
+        options: [optA, optB, optC, optD],
+        correct: correctIdx
+      });
+
+      saveQuestions();
+      renderAdminQuestions();
+
+      // Reset inputs
+      document.getElementById('q-text').value = '';
+      document.getElementById('opt-a').value = '';
+      document.getElementById('opt-b').value = '';
+      document.getElementById('opt-c').value = '';
+      document.getElementById('opt-d').value = '';
+      alert("Question added successfully!");
+    }
+
+    function deleteQuestion(index) {
+      if (confirm("Are you sure you want to delete this question?")) {
+        questions.splice(index, 1);
+        saveQuestions();
+        renderAdminQuestions();
+      }
+    }
+
+    // --- STUDENT EXAM LOGIC ---
+    function startExam() {
+      const name = document.getElementById('student-name').value;
+      const roll = document.getElementById('student-roll').value;
+
+      if (!name || !roll) {
+        alert("Please provide your name and roll number.");
+        return;
+      }
+
+      if (questions.length === 0) {
+        alert("No questions available in the exam paper. Please contact teacher.");
+        return;
+      }
+
+      document.getElementById('student-form-container').style.display = 'none';
+      document.getElementById('exam-container').style.display = 'block';
+
+      const quizBox = document.getElementById('quiz-box');
+      quizBox.innerHTML = '';
+
+      questions.forEach((q, index) => {
+        const qCard = document.createElement('div');
+        qCard.className = 'question-card';
+        let optionsHTML = '';
+        q.options.forEach((opt, optIndex) => {
+          optionsHTML += `
+            <label>
+              <input type="radio" name="question-${index}" value="${optIndex}"> ${opt}
+            </label><br>
+          `;
+        });
+
+        qCard.innerHTML = `
+          <p><strong>Q${index + 1}: ${q.question}</strong></p>
+          ${optionsHTML}
+        `;
+        quizBox.appendChild(qCard);
+      });
+    }
+
+    function submitExam() {
+      let score = 0;
+      questions.forEach((q, index) => {
+        const selectedOption = document.querySelector(`input[name="question-${index}"]:checked`);
+        if (selectedOption && parseInt(selectedOption.value) === q.correct) {
+          score++;
+        }
+      });
+
+      document.getElementById('exam-container').style.display = 'none';
+      document.getElementById('result-container').style.display = 'block';
+
+      const total = questions.length;
+      const percentage = (score / total) * 100;
+
+      document.getElementById('obtained-score').innerText = score;
+      document.getElementById('total-score').innerText = total;
+
+      const passMsg = document.getElementById('pass-fail-msg');
+      if (percentage >= 50) {
+        passMsg.innerText = "Congratulations! You Passed.";
+        passMsg.style.color = "green";
+
+        // Show Certificate
+        document.getElementById('certificate').style.display = 'block';
+        document.getElementById('cert-name').innerText = document.getElementById('student-name').value;
+        document.getElementById('cert-score').innerText = percentage.toFixed(1);
+        document.getElementById('cert-date').innerText = new Date().toLocaleDateString();
+      } else {
+        passMsg.innerText = "Sorry! You did not pass. Try again.";
+        passMsg.style.color = "red";
+      }
+    }
+  </script>
+</body>
+</html>
